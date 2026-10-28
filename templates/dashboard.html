@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="dashboard-wrap">
+  <div class="section-heading"><div><div class="eyebrow">PLAYER OVERVIEW</div><h1>Welcome, <span class="gradient-text">{{ session.get('username') }}</span></h1><p class="muted">Every round is a chance to improve.</p></div><a class="btn btn-primary" href="{{ url_for('game') }}">Play a round →</a></div>
+  <div class="dashboard-stats">
+    <article class="metric-card"><span class="metric-symbol">✦</span><span class="metric-label">BEST SCORE</span><strong>{{ stats.best_score }}</strong><small>Your personal record</small></article>
+    <article class="metric-card"><span class="metric-symbol">◷</span><span class="metric-label">GAMES PLAYED</span><strong>{{ stats.games }}</strong><small>Rounds completed</small></article>
+    <article class="metric-card"><span class="metric-symbol">↗</span><span class="metric-label">AVERAGE SCORE</span><strong>{{ stats.average_score }}</strong><small>Across all rounds</small></article>
+    <article class="metric-card"><span class="metric-symbol">◎</span><span class="metric-label">ACCURACY</span><strong>{{ accuracy }}%</strong><small>Correct answers overall</small></article>
+  </div>
+  <section class="table-card"><div class="table-heading"><div><h2>Recent games</h2><p class="muted">Your latest saved results.</p></div><a href="{{ url_for('leaderboard') }}" class="text-link">Leaderboard →</a></div>
+    {% if history %}
+    <div class="table-scroll"><table><thead><tr><th>Played at</th><th>Score</th><th>Correct</th><th>Accuracy</th></tr></thead><tbody>
+    {% for row in history %}
+      <tr><td>{{ row.played_at }}</td><td><span class="score-pill">{{ row.score }}</span></td><td>{{ row.correct_answers }} / {{ row.total_answers }}</td><td>{% if row.total_answers %}{{ ((row.correct_answers / row.total_answers) * 100)|round(1) }}%{% else %}0%{% endif %}</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">◷</div><h3>Your first round starts here</h3><p>Complete a game and your results will appear here.</p><a class="btn btn-primary" href="{{ url_for('game') }}">Play your first game</a></div>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

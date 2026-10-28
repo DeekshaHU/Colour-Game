@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+{% block content %}
+<section class="dashboard-wrap">
+  <div class="section-heading"><div><div class="eyebrow">THE HIGH-SCORE CLUB</div><h1>Global <span class="gradient-text">leaderboard</span></h1><p class="muted">Players ranked by their best saved score.</p></div>{% if session.get('user_id') %}<a class="btn btn-primary" href="{{ url_for('game') }}">Challenge yourself →</a>{% else %}<a class="btn btn-primary" href="{{ url_for('register') }}">Join the game →</a>{% endif %}</div>
+  <section class="table-card">
+    {% if rows %}
+    <div class="table-scroll"><table><thead><tr><th>Rank</th><th>Player</th><th>Best score</th><th>Games played</th></tr></thead><tbody>
+    {% for row in rows %}
+      <tr><td><span class="rank-badge {% if loop.index <= 3 %}top-rank{% endif %}">{% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% elif loop.index == 3 %}🥉{% else %}{{ loop.index }}{% endif %}</span></td><td><strong>{{ row.username }}</strong>{% if session.get('username') == row.username %}<span class="you-tag">YOU</span>{% endif %}</td><td><span class="score-pill">{{ row.best_score }}</span></td><td>{{ row.games_played }}</td></tr>
+    {% endfor %}
+    </tbody></table></div>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">✦</div><h3>The leaderboard is waiting</h3><p>Play the first round to claim a place here.</p><a class="btn btn-primary" href="{{ url_for('register') }}">Get started</a></div>
+    {% endif %}
+  </section>
+</section>
+{% endblock %}

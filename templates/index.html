@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="pulse-dot"></span> FOCUS • SPEED • ACCURACY</div>
+    <h1>Your brain sees a word.<br><span class="gradient-text">Can you see its colour?</span></h1>
+    <p class="hero-description">Challenge your concentration in this fast-paced colour recognition game. Ignore the word, trust the colour, and beat the clock.</p>
+    <div class="hero-actions">
+      {% if session.get('user_id') %}
+        <a class="btn btn-primary" href="{{ url_for('game') }}">Play now <span>→</span></a>
+        <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">My dashboard</a>
+      {% else %}
+        <a class="btn btn-primary" href="{{ url_for('register') }}">Get started <span>→</span></a>
+        <a class="btn btn-secondary" href="{{ url_for('login') }}">I have an account</a>
+      {% endif %}
+    </div>
+    <div class="mini-stats">
+      <div><strong>30 sec</strong><span>per round</span></div>
+      <div><strong>4 colours</strong><span>to choose from</span></div>
+      <div><strong>∞ practice</strong><span>improve your score</span></div>
+    </div>
+  </div>
+  <div class="preview-card">
+    <div class="preview-top"><span class="tiny-label">SAMPLE CHALLENGE</span><span class="live-badge">● LIVE</span></div>
+    <div class="preview-score"><span>YOUR SCORE</span><strong>120</strong></div>
+    <div class="demo-word">BLUE</div>
+    <div class="demo-caption">What colour is the word displayed in?</div>
+    <div class="demo-options"><span class="demo-option red">RED</span><span class="demo-option blue">BLUE</span><span class="demo-option green">GREEN</span><span class="demo-option yellow">YELLOW</span></div>
+    <div class="preview-bottom"><span>◷ 00:30</span><span>✦ Stay focused!</span></div>
+  </div>
+</section>
+<section class="features">
+  <article class="feature-card"><div class="feature-icon icon-purple">✦</div><h3>Train your focus</h3><p>Switch attention between words and colours in every round.</p></article>
+  <article class="feature-card"><div class="feature-icon icon-blue">◷</div><h3>Beat the timer</h3><p>Make quick decisions before your 30-second round ends.</p></article>
+  <article class="feature-card"><div class="feature-icon icon-green">↗</div><h3>Track your progress</h3><p>Save your scores, review past games, and compare the leaderboard.</p></article>
+</section>
+{% endblock %}
